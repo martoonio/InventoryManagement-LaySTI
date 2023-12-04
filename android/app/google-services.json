@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "475934450054",
+    "firebase_url": "https://layanansti-85ac5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "layanansti-85ac5",
+    "storage_bucket": "layanansti-85ac5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475934450054:android:233d331dab10ee53510c07",
+        "android_client_info": {
+          "package_name": "com.example.lasti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJpwF51hIJe60kx0DVsBnVAx5zLnRypho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
