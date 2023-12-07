@@ -16,6 +16,8 @@ const kPrimaryGradientColor = LinearGradient(
 const kSecondaryColor = Color(0xff9ad0c2);
 const kTextColor = Color(0xFF757575);
 
+const defaultDuration = Duration(milliseconds: 250);
+
 TextStyle whiteTextStyle = GoogleFonts.dmSans(
   color: whiteColor,
 );

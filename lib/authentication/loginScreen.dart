@@ -8,6 +8,8 @@ import 'package:lasti/constants.dart';
 import 'package:lasti/global/global_var.dart';
 import 'package:lasti/method/commonMethod.dart';
 import 'package:lasti/pages/dashboard.dart';
+import 'package:lasti/pages/homePage.dart';
+import 'package:lasti/pages/homeProduction.dart';
 import 'package:lasti/widget/loading_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -64,29 +66,25 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!context.mounted) return;
     Navigator.pop(context);
 
-    if (userFirebase != null) {
-      DatabaseReference usersRef = FirebaseDatabase.instance
-          .ref()
-          .child("Admin")
-          .child(userFirebase.uid);
-      usersRef.once().then((snap) {
-        if (snap.snapshot.value != null) {
-          if ((snap.snapshot.value as Map)["status"] == "active") {
-            userName = (snap.snapshot.value as Map)["username"];
-            Navigator.push(
-                context, MaterialPageRoute(builder: (c) => const Dashboard()));
-          } else {
-            FirebaseAuth.instance.signOut();
-            cMethods.displaySnackBar(
-                "you are blocked. Contact admin: nabilahamnda@gmail.com",
-                context);
-          }
-        } else {
-          FirebaseAuth.instance.signOut();
-          cMethods.displaySnackBar(
-              "your record do not exist as a Waver.", context);
-        }
-      });
+    if(userFirebase!.email! == 'user@lasti.com'){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeProduction(),
+        ),
+      );
+    } else if (userFirebase!.email! == 'admin@lasti.com'){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      FirebaseAuth.instance.signOut();
+      cMethods.displaySnackBar(
+          "No record exists for this user. Please create new account.",
+          context);
     }
   }
 
@@ -94,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kSecondaryColor,
         elevation: 0,
         title: Text(
@@ -234,12 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Dashboard(),
-                          ),
-                        );
+                        checkIfNetworkIsAvailable();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: kSecondaryColor,
