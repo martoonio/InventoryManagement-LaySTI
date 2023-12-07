@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '475934450054',
     projectId: 'layanansti-85ac5',
     authDomain: 'layanansti-85ac5.firebaseapp.com',
+    databaseURL: 'https://layanansti-85ac5-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'layanansti-85ac5.appspot.com',
     measurementId: 'G-3F2XDC46T7',
   );

@@ -10,4 +10,7 @@ String itemPhoto = "";
 String itemName = "";
 String itemDescription = "";
 int itemQuantity = 0;
+Map<String, dynamic> materialMap = {};
+
+
 

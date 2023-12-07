@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lasti/constants.dart';
+import 'package:lasti/global/global_var.dart';
 
 class MakeOrder extends StatefulWidget {
   const MakeOrder({Key? key}) : super(key: key);
@@ -15,26 +18,80 @@ class _MakeOrderState extends State<MakeOrder> {
   DatabaseReference orderRef =
       FirebaseDatabase.instance.ref().child("requestOrder");
 
-  DatabaseReference listItem =
-        FirebaseDatabase.instance.ref().child("items");  
+  DatabaseReference listItem = FirebaseDatabase.instance.ref().child("items");
 
   Map orderMap = {};
 
-  Map materialMap = {};
+  //debug material map
 
   requestOrder() {
+    bool isAccepted = false;
     orderMap = {
-      "orderDateTime" : DateTime.now().toString(),
+      "orderDateTime": DateTime.now().toString(),
       "meja": mejaQuantity,
       "kursi": kursiQuantity,
       "lemari": lemariQuantity,
       "nakas": nakasQuantity,
       "rak": rakQuantity,
-      "orderStatus" : "Pending",
-      "orderDeadline" : DateTime.now().add(Duration(days: 3)).toString(),
+      "orderStatus": "Pending",
+      "orderDeadline": DateTime.now().add(Duration(days: 3)).toString(),
     };
 
-    orderRef.push().set(orderMap);
+    checkMaterialStock();
+    //     Meja
+    // kayu 3, sekrup 8, lem 2, cat 1
+    // Kusi
+    // kayu 2, sekrup 8, lem 2, cat 1
+    // Lemari
+    // kayu 8, sekrup 24, paku 24, 1 kaca, 1 cat
+    // Nakas
+    // 2 kayu, 8 sekrup, 4 paku, 1 lem, 1 cat
+    // Rak
+    // 10 besi, 24 sekrup, 2 kayu, 1 cat
+
+    if (mejaQuantity > 0) {
+      if (kayu >= 3 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
+        isAccepted = true;
+      }else{
+        isAccepted = false;
+      }
+    }
+    if (kursiQuantity > 0) {
+      if (kayu >= 2 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
+        isAccepted = true;
+      }else{
+        isAccepted = false;
+      }
+    }
+    if (lemariQuantity > 0) {
+      if (kayu >= 8 &&
+          sekrup >= 24 &&
+          paku >= 24 &&
+          kaca >= 1 &&
+          cat >= 1) {
+        isAccepted = true;
+      }else{
+        isAccepted = false;
+      }
+    }
+    if (nakasQuantity > 0) {
+      if (kayu >= 2 && sekrup >= 8 && paku >= 4 && lemariQuantity >= 1) {
+        isAccepted = true;
+      }else{
+        isAccepted = false;
+      }
+    }
+    if (rakQuantity > 0) {
+      if (besi >= 10 && sekrup >= 24 && kayu >= 2 && cat >= 1) {
+        isAccepted = true;
+      }else{
+        isAccepted = false;
+      }
+    }
+
+    materialMap.forEach((key, value) {});
+    if(isAccepted){
+      orderRef.push().set(orderMap);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -69,13 +126,79 @@ class _MakeOrderState extends State<MakeOrder> {
           );
         },
       );
+    }else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: kSecondaryColor,
+            title: Text("Failed",
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: whiteColor,
+                )),
+            content: Text("Item not added, please check your material stock",
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
+                  color: whiteColor,
+                )),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("Ok",
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: whiteColor,
+                    )),
+              ),
+            ],
+          );
+        },
+      );
     }
+  }
 
   int mejaQuantity = 0;
   int kursiQuantity = 0;
   int lemariQuantity = 0;
   int nakasQuantity = 0;
   int rakQuantity = 0;
+  int kayu = 0;
+  int paku = 0;
+  int cat = 0;
+  int sekrup = 0;
+  int besi = 0;
+  int kaca = 0;
+
+  checkMaterialStock() {
+    materialMap.forEach((key, value) {
+      if (value["name"] == "kayu") {
+        kayu = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "paku") {
+        paku = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "cat") {
+        cat = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "sekrup") {
+        sekrup = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "besi") {
+        besi = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "kaca") {
+        kaca = int.parse(value["quantity"]);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -33,6 +33,21 @@ class _LoginScreenState extends State<LoginScreen> {
     signInFormValidation();
   }
 
+  DatabaseReference listItem = FirebaseDatabase.instance.ref().child("items");
+
+  fetchDataMaterial() async {
+    listItem.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      if (data != null && data is Map) {
+        materialMap = Map<String, dynamic>.from(data);
+      }else{
+        print("data is null");
+      }
+    });
+  }
+
+
+
   signInFormValidation() {
     if (!emailTextEditingController.text.contains("@")) {
       cMethods.displaySnackBar("please write valid email.", context);
@@ -86,6 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
           "No record exists for this user. Please create new account.",
           context);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDataMaterial();
   }
 
   @override
