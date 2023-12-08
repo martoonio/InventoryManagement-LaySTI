@@ -41,59 +41,45 @@ class _MakeOrderState extends State<MakeOrder> {
     };
 
     checkMaterialStock();
-    //     Meja
-    // kayu 3, sekrup 8, lem 2, cat 1
-    // Kusi
-    // kayu 2, sekrup 8, lem 2, cat 1
-    // Lemari
-    // kayu 8, sekrup 24, paku 24, 1 kaca, 1 cat
-    // Nakas
-    // 2 kayu, 8 sekrup, 4 paku, 1 lem, 1 cat
-    // Rak
-    // 10 besi, 24 sekrup, 2 kayu, 1 cat
 
     if (mejaQuantity > 0) {
       if (kayu >= 3 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
         isAccepted = true;
-      }else{
+      } else {
         isAccepted = false;
       }
     }
     if (kursiQuantity > 0) {
       if (kayu >= 2 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
         isAccepted = true;
-      }else{
+      } else {
         isAccepted = false;
       }
     }
     if (lemariQuantity > 0) {
-      if (kayu >= 8 &&
-          sekrup >= 24 &&
-          paku >= 24 &&
-          kaca >= 1 &&
-          cat >= 1) {
+      if (kayu >= 8 && sekrup >= 24 && paku >= 24 && kaca >= 1 && cat >= 1) {
         isAccepted = true;
-      }else{
+      } else {
         isAccepted = false;
       }
     }
     if (nakasQuantity > 0) {
       if (kayu >= 2 && sekrup >= 8 && paku >= 4 && lemariQuantity >= 1) {
         isAccepted = true;
-      }else{
+      } else {
         isAccepted = false;
       }
     }
     if (rakQuantity > 0) {
       if (besi >= 10 && sekrup >= 24 && kayu >= 2 && cat >= 1) {
         isAccepted = true;
-      }else{
+      } else {
         isAccepted = false;
       }
     }
-
-    materialMap.forEach((key, value) {});
-    if(isAccepted){
+    addToHistory(mejaQuantity, kursiQuantity, lemariQuantity, nakasQuantity,
+        rakQuantity, isAccepted);
+    if (isAccepted) {
       orderRef.push().set(orderMap);
       showDialog(
         context: context,
@@ -129,7 +115,7 @@ class _MakeOrderState extends State<MakeOrder> {
           );
         },
       );
-    }else{
+    } else {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -179,24 +165,139 @@ class _MakeOrderState extends State<MakeOrder> {
   int besi = 0;
   int kaca = 0;
 
+  addToHistory(int mejaQuantity, int kursiQuantity, int lemariQuantity,
+      int nakasQuantity, int rakQuantity, bool isAccepted) {
+    int kayuOrder = 3 * mejaQuantity +
+        2 * kursiQuantity +
+        8 * lemariQuantity +
+        2 * nakasQuantity +
+        2 * rakQuantity;
+    int pakuOrder = 24 * lemariQuantity + 4 * nakasQuantity;
+    int sekrupOrder = 8 * mejaQuantity +
+        8 * kursiQuantity +
+        24 * lemariQuantity +
+        8 * nakasQuantity +
+        24 * rakQuantity;
+    int catOrder = 1 * mejaQuantity +
+        1 * kursiQuantity +
+        1 * lemariQuantity +
+        1 * nakasQuantity +
+        1 * rakQuantity;
+    int besiOrder = 10 * rakQuantity;
+    int kacaOrder = 1 * lemariQuantity;
+    if (isAccepted) {
+      Map historyMap = {
+        "orderDateTime": DateTime.now().toString(),
+        if (kayuOrder > 0) "kayu": kayuOrder.toString(),
+        if (pakuOrder > 0) "paku": pakuOrder.toString(),
+        if (catOrder > 0) "cat": catOrder.toString(),
+        if (sekrupOrder > 0) "sekrup": sekrupOrder.toString(),
+        if (besiOrder > 0) "besi": besiOrder.toString(),
+        if (kacaOrder > 0) "kaca": kacaOrder.toString(),
+        "orderStatus": "Accepted",
+      };
+      historyRef.push().set(historyMap);
+      materialMap.forEach((key, value) {
+        if (value["name"] == "Kayu") {
+          kayu = int.parse(value["quantity"]);
+          kayu = kayu - kayuOrder;
+          value["quantity"] = kayu.toString();
+        }
+        if (value["name"] == "Paku") {
+          paku = int.parse(value["quantity"]);
+          paku = paku - pakuOrder;
+          value["quantity"] = paku.toString();
+        }
+        if (value["name"] == "Cat") {
+          cat = int.parse(value["quantity"]);
+          cat = cat - catOrder;
+          value["quantity"] = cat.toString();
+        }
+        if (value["name"] == "Sekrup") {
+          sekrup = int.parse(value["quantity"]);
+          sekrup = sekrup - sekrupOrder;
+          value["quantity"] = sekrup.toString();
+        }
+        if (value["name"] == "Besi") {
+          besi = int.parse(value["quantity"]);
+          besi = besi - besiOrder;
+          value["quantity"] = besi.toString();
+        }
+        if (value["name"] == "Kaca") {
+          kaca = int.parse(value["quantity"]);
+          kaca = kaca - kacaOrder;
+          value["quantity"] = kaca.toString();
+        }
+        listItem.child(key).set(value);
+      });
+      print("material updated successfully");
+    } else {
+      int kayuNeeded = 0;
+      int pakuNeeded = 0;
+      int catNeeded = 0;
+      int sekrupNeeded = 0;
+      int besiNeeded = 0;
+      int kacaNeeded = 0;
+
+      materialMap.forEach((key, value) {
+        if (value["name"] == "Kayu") {
+          kayu = int.parse(value["quantity"]);
+          kayuNeeded = kayu - kayuOrder;
+          print(kayuNeeded);
+        }
+        if (value["name"] == "Paku") {
+          paku = int.parse(value["quantity"]);
+          pakuNeeded = paku - pakuOrder;
+        }
+        if (value["name"] == "Cat") {
+          cat = int.parse(value["quantity"]);
+          catNeeded = cat - catOrder;
+        }
+        if (value["name"] == "Sekrup") {
+          sekrup = int.parse(value["quantity"]);
+          sekrupNeeded = sekrup - sekrupOrder;
+        }
+        if (value["name"] == "Besi") {
+          besi = int.parse(value["quantity"]);
+          besiNeeded = besi - besiOrder;
+        }
+        if (value["name"] == "Kaca") {
+          kaca = int.parse(value["quantity"]);
+          kacaNeeded = kaca - kacaOrder;
+        }
+      });
+      Map historyMap = {
+        "orderDateTime": DateTime.now().toString(),
+        if (kayuNeeded < 0) "kayu": kayuNeeded.toString(),
+        if (pakuNeeded < 0) "paku": pakuNeeded.toString(),
+        if (catNeeded < 0) "cat": catNeeded.toString(),
+        if (sekrupNeeded < 0) "sekrup": sekrupNeeded.toString(),
+        if (besiNeeded < 0) "besi": besiNeeded.toString(),
+        if (kacaNeeded < 0) "kaca": kacaNeeded.toString(),
+        "orderStatus": "Pending",
+      };
+      historyRef.push().set(historyMap);
+    }
+  }
+
   checkMaterialStock() {
     materialMap.forEach((key, value) {
-      if (value["name"] == "kayu") {
+      if (value["name"] == "Kayu") {
         kayu = int.parse(value["quantity"]);
       }
-      if (value["name"] == "paku") {
+      if (value["name"] == "Paku") {
         paku = int.parse(value["quantity"]);
       }
-      if (value["name"] == "cat") {
+      if (value["name"] == "Cat") {
         cat = int.parse(value["quantity"]);
       }
-      if (value["name"] == "sekrup") {
+      if (value["name"] == "Sekrup") {
         sekrup = int.parse(value["quantity"]);
       }
-      if (value["name"] == "besi") {
+      if (value["name"] == "Besi") {
         besi = int.parse(value["quantity"]);
       }
-      if (value["name"] == "kaca") {
+      if (value["name"] == "Kaca") {
         kaca = int.parse(value["quantity"]);
       }
     });
