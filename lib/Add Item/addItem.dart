@@ -22,8 +22,12 @@ class _AddItemState extends State<AddItem> {
       TextEditingController();
 
   DatabaseReference itemsRef = FirebaseDatabase.instance.ref().child("items");
+  DatabaseReference historyRef =
+      FirebaseDatabase.instance.ref().child("history");
 
   Map itemDataMap = {}; // Pindahkan inisialisasi ke sini
+
+  Map historyAddedItemDataMap = {}; // Pindahkan inisialisasi ke sini
 
   addItem() async {
     // Perbarui itemDataMap di dalam metode addItem
@@ -31,13 +35,25 @@ class _AddItemState extends State<AddItem> {
       "photo": urlOfUploadedImage,
       "name": itemNameTextEditingController.text.trim(),
       "quantity": quantityTextEditingController.text.trim(),
+      "dateAdded": DateTime.now().toString(),
       "description": descriptionTextEditingController.text.trim(),
+    };
+
+    // Perbarui historyAddedItemDataMap di dalam metode addItem
+    historyAddedItemDataMap = {
+      "photo": urlOfUploadedImage,
+      "name": itemNameTextEditingController.text.trim(),
+      "quantity": quantityTextEditingController.text.trim(),
+      "date": DateTime.now().toString(),
+      "description": descriptionTextEditingController.text.trim(),
+      "status": "Added",
     };
 
     if (itemNameTextEditingController.text.isNotEmpty &&
         quantityTextEditingController.text.isNotEmpty &&
         descriptionTextEditingController.text.isNotEmpty) {
       itemsRef.push().set(itemDataMap);
+      historyRef.push().set(historyAddedItemDataMap);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -126,30 +142,12 @@ class _AddItemState extends State<AddItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffecf4d6),
-      appBar: AppBar(
-          backgroundColor: kSecondaryColor,
-          elevation: 0,
-          title: Text(
-            "Add Item",
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: kPrimaryColor,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.chevron_left,
-              color: kPrimaryColor,
-              size: 40,
-            ),
-          )),
-      body: StreamBuilder(
+    return Dialog(
+      backgroundColor: Color(0xfff7faec),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: StreamBuilder(
           stream: itemsRef.onValue,
           builder: (context, snapshot) {
             return SingleChildScrollView(
@@ -159,6 +157,33 @@ class _AddItemState extends State<AddItem> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.chevron_left,
+                                color: kSecondaryColor,
+                                size: 40,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                "Back",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: kSecondaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
                       imageFile != null
                           ? Container(
                               width: 180,

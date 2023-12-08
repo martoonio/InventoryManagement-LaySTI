@@ -18,6 +18,9 @@ class _MakeOrderState extends State<MakeOrder> {
   DatabaseReference orderRef =
       FirebaseDatabase.instance.ref().child("requestOrder");
 
+  DatabaseReference historyRef =
+      FirebaseDatabase.instance.ref().child("history");
+
   DatabaseReference listItem = FirebaseDatabase.instance.ref().child("items");
 
   Map orderMap = {};
