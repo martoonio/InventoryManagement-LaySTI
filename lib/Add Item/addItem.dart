@@ -345,10 +345,8 @@ class _AddItemState extends State<AddItem> {
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
-                          elevation: 10,
+                          foregroundColor: Colors.white, backgroundColor: kSecondaryColor, elevation: 10,
                           fixedSize: Size(150, 50),
-                          primary: kSecondaryColor,
-                          onPrimary: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

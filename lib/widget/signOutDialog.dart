@@ -49,7 +49,7 @@ class SignOutDialog extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
+                        backgroundColor: Colors.red,
                         elevation: 2,
                         fixedSize: Size(100, 20)),
                     onPressed: () {
@@ -64,7 +64,7 @@ class SignOutDialog extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: kPrimaryColor,
+                        backgroundColor: kPrimaryColor,
                         elevation: 2,
                         fixedSize: Size(100, 20)),
                     onPressed: () {

@@ -929,7 +929,7 @@ class _MakeOrderState extends State<MakeOrder> {
                             children: [
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.red,
+                                    backgroundColor: Colors.red,
                                     elevation: 2,
                                     fixedSize: Size(100, 20)),
                                 onPressed: () {
@@ -944,7 +944,7 @@ class _MakeOrderState extends State<MakeOrder> {
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: kPrimaryColor,
+                                    backgroundColor: kPrimaryColor,
                                     elevation: 2,
                                     fixedSize: Size(100, 20)),
                                 onPressed: () {
@@ -975,10 +975,8 @@ class _MakeOrderState extends State<MakeOrder> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                elevation: 10,
+                foregroundColor: Colors.white, backgroundColor: kSecondaryColor, elevation: 10,
                 fixedSize: Size(120, 50),
-                primary: kSecondaryColor,
-                onPrimary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   side: BorderSide(
