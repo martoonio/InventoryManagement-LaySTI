@@ -73,7 +73,7 @@ class _HistoryPageState extends State<HistoryPage> {
               return Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
