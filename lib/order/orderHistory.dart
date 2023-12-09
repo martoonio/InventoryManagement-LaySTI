@@ -78,7 +78,7 @@ class _OrderHistoryState extends State<OrderHistory> {
             itemBuilder: ((context, index) {
               if (itemsList[index]["orderStatus"] != null &&
                   itemsList[index]["orderDateTime"] != null) {
-                print(itemsList[index].toString());
+      
                 return Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Card(

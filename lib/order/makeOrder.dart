@@ -29,28 +29,17 @@ class _MakeOrderState extends State<MakeOrder> {
 
   requestOrder() {
     bool isAccepted = false;
-    orderMap = {
-      "orderDateTime": DateTime.now().toString(),
-      "meja": mejaQuantity,
-      "kursi": kursiQuantity,
-      "lemari": lemariQuantity,
-      "nakas": nakasQuantity,
-      "rak": rakQuantity,
-      "orderStatus": "Pending",
-      "orderDeadline": DateTime.now().add(Duration(days: 3)).toString(),
-    };
-
     checkMaterialStock();
 
     if (mejaQuantity > 0) {
-      if (kayu >= 3 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
+      if (kayu >= 3 && sekrup >= 8 && lem >= 2 && cat >= 1) {
         isAccepted = true;
       } else {
         isAccepted = false;
       }
     }
     if (kursiQuantity > 0) {
-      if (kayu >= 2 && sekrup >= 8 && lemariQuantity >= 2 && cat >= 1) {
+      if (kayu >= 2 && sekrup >= 8 && lem >= 2 && cat >= 1) {
         isAccepted = true;
       } else {
         isAccepted = false;
@@ -64,7 +53,7 @@ class _MakeOrderState extends State<MakeOrder> {
       }
     }
     if (nakasQuantity > 0) {
-      if (kayu >= 2 && sekrup >= 8 && paku >= 4 && lemariQuantity >= 1) {
+      if (kayu >= 2 && sekrup >= 8 && paku >= 4 && lem >= 1) {
         isAccepted = true;
       } else {
         isAccepted = false;
@@ -79,8 +68,19 @@ class _MakeOrderState extends State<MakeOrder> {
     }
     addToHistory(mejaQuantity, kursiQuantity, lemariQuantity, nakasQuantity,
         rakQuantity, isAccepted);
+    
+    orderMap = {
+      "orderDateTime": DateTime.now().toString(),
+      "meja": mejaQuantity,
+      "kursi": kursiQuantity,
+      "lemari": lemariQuantity,
+      "nakas": nakasQuantity,
+      "rak": rakQuantity,
+      "orderStatus": isAccepted ? "Accepted" : "Pending",
+      "orderDeadline": DateTime.now().add(Duration(days: 3)).toString(),
+    };
+    orderRef.push().set(orderMap);
     if (isAccepted) {
-      orderRef.push().set(orderMap);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -164,6 +164,7 @@ class _MakeOrderState extends State<MakeOrder> {
   int sekrup = 0;
   int besi = 0;
   int kaca = 0;
+  int lem = 0;
 
   addToHistory(int mejaQuantity, int kursiQuantity, int lemariQuantity,
       int nakasQuantity, int rakQuantity, bool isAccepted) {
@@ -185,6 +186,7 @@ class _MakeOrderState extends State<MakeOrder> {
         1 * rakQuantity;
     int besiOrder = 10 * rakQuantity;
     int kacaOrder = 1 * lemariQuantity;
+    int lemOrder = 2 * mejaQuantity + 2 * kursiQuantity + 1 * nakasQuantity;
     if (isAccepted) {
       Map historyMap = {
         "orderDateTime": DateTime.now().toString(),
@@ -194,7 +196,8 @@ class _MakeOrderState extends State<MakeOrder> {
         if (sekrupOrder > 0) "sekrup": sekrupOrder.toString(),
         if (besiOrder > 0) "besi": besiOrder.toString(),
         if (kacaOrder > 0) "kaca": kacaOrder.toString(),
-        "orderStatus": "Accepted",
+        if(lemOrder > 0) "lem": lemOrder.toString(),
+        "orderStatus": "Removed",
       };
       historyRef.push().set(historyMap);
       materialMap.forEach((key, value) {
@@ -228,9 +231,13 @@ class _MakeOrderState extends State<MakeOrder> {
           kaca = kaca - kacaOrder;
           value["quantity"] = kaca.toString();
         }
+        if (value["name"] == "Lem") {
+          lem = int.parse(value["quantity"]);
+          lem = lem - lemOrder;
+          value["quantity"] = lem.toString();
+        }
         listItem.child(key).set(value);
       });
-      print("material updated successfully");
     } else {
       int kayuNeeded = 0;
       int pakuNeeded = 0;
@@ -238,12 +245,12 @@ class _MakeOrderState extends State<MakeOrder> {
       int sekrupNeeded = 0;
       int besiNeeded = 0;
       int kacaNeeded = 0;
+      int lemNeeded = 0;
 
       materialMap.forEach((key, value) {
         if (value["name"] == "Kayu") {
           kayu = int.parse(value["quantity"]);
           kayuNeeded = kayu - kayuOrder;
-          print(kayuNeeded);
         }
         if (value["name"] == "Paku") {
           paku = int.parse(value["quantity"]);
@@ -265,6 +272,10 @@ class _MakeOrderState extends State<MakeOrder> {
           kaca = int.parse(value["quantity"]);
           kacaNeeded = kaca - kacaOrder;
         }
+        if (value["name"] == "Lem") {
+          lem = int.parse(value["quantity"]);
+          lemNeeded = lem - lemOrder;
+        }
       });
       Map historyMap = {
         "orderDateTime": DateTime.now().toString(),
@@ -274,6 +285,7 @@ class _MakeOrderState extends State<MakeOrder> {
         if (sekrupNeeded < 0) "sekrup": sekrupNeeded.toString(),
         if (besiNeeded < 0) "besi": besiNeeded.toString(),
         if (kacaNeeded < 0) "kaca": kacaNeeded.toString(),
+        if (lemNeeded < 0) "lem": lemNeeded.toString(),
         "orderStatus": "Pending",
       };
       historyRef.push().set(historyMap);
@@ -299,6 +311,9 @@ class _MakeOrderState extends State<MakeOrder> {
       }
       if (value["name"] == "Kaca") {
         kaca = int.parse(value["quantity"]);
+      }
+      if (value["name"] == "Lem") {
+        lem = int.parse(value["quantity"]);
       }
     });
   }
