@@ -9,24 +9,24 @@ IMS memiliki dua peran utama: Admin dan User (tim produksi). Admin memiliki akse
 ## Fitur Utama
 1. Materials (Admin)
 Fitur Materials memungkinkan pengguna untuk melihat bahan baku yang sudah tersimpan di inventory beserta kuantitasnya. Fungsionalitas utama melibatkan:
-- Tampilan Bahan Baku: Menampilkan daftar bahan baku yang ada di inventory.
-- Kuantitas: Menampilkan kuantitas dari setiap bahan baku.
+-   Tampilan Bahan Baku: Menampilkan daftar bahan baku yang ada di inventory.
+-   Kuantitas: Menampilkan kuantitas dari setiap bahan baku.
 
 2. History (Admin)
 Fitur History memungkinkan pengguna untuk melihat riwayat pergerakan bahan baku dalam sistem, mencakup:
-- Materials In: Menampilkan bahan baku yang baru saja ditambahkan ke inventory.
-- Materials Out: Keluar ke Production: Menampilkan bahan baku yang telah digunakan dalam proses produksi.
--Request Materials: Menampilkan bahan baku yang sedang dalam proses permintaan ke supplier berdasarkan permintaan dari produksi.
+-   Materials In: Menampilkan bahan baku yang baru saja ditambahkan ke inventory.
+-   Materials Out: Keluar ke Production: Menampilkan bahan baku yang telah digunakan dalam proses produksi.
+-   Request Materials: Menampilkan bahan baku yang sedang dalam proses permintaan ke supplier berdasarkan permintaan dari produksi.
 
 3. Make Order (User)
 Fitur Make Order memungkinkan User (tim produksi) untuk membuat pesanan bahan baku yang tidak tersedia di inventory dan harus diproduksi terlebih dahulu. Fungsionalitas utama melibatkan:
-- Pemilihan Barang: User dapat memasukkan barang yang ingin dibuat sesuai dengan katalog.
-- Membuat Pesanan: User dapat membuat pesanan bahan baku baru untuk diproduksi, dengan menentukan jumlah yang dibutuhkan.
+-   Pemilihan Barang: User dapat memasukkan barang yang ingin dibuat sesuai dengan katalog.
+-   Membuat Pesanan: User dapat membuat pesanan bahan baku baru untuk diproduksi, dengan menentukan jumlah yang dibutuhkan.
 
 4. History (User)
 Fitur History memungkinkan User (tim produksi) untuk melihat riwayat pesanan barang yang telah dibuat. Fungsionalitas utama melibatkan:
-- Melihat Riwayat Pesanan: User dapat melihat daftar barang yang pernah dipesan bersama dengan tanggal dan status pesanan. 
-- Automatic Supplier Request (Jika Order Pending): Jika status pesanan berada dalam kondisi pending (karena tidak ada bahan di inventory), sistem akan secara otomatis membuat permintaan ke supplier untuk memenuhi kebutuhan bahan baku yang dibutuhkan. Fungsionalitas ini secara langsung terhubung ke request materials di fungsi History milik Admin.
+-   Melihat Riwayat Pesanan: User dapat melihat daftar barang yang pernah dipesan bersama dengan tanggal dan status pesanan. 
+-   Automatic Supplier Request (Jika Order Pending): Jika status pesanan berada dalam kondisi pending (karena tidak ada bahan di inventory), sistem akan secara otomatis membuat permintaan ke supplier untuk memenuhi kebutuhan bahan baku yang dibutuhkan. Fungsionalitas ini secara langsung terhubung ke request materials di fungsi History milik Admin.
 
 ## Anggota Kelompok
 - Adrian Fahri Affandi - 18221002
