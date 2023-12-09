@@ -139,7 +139,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     shrinkWrap: true,
                     itemCount: items.length,
                     itemBuilder: (context, index) {
-                      if (history[index]["status"] == "Removed") {
+                      if (history[index]["orderStatus"] == "Removed") {
                         return Padding(
                           padding:  EdgeInsets.symmetric(horizontal: 20),
                           child: Card(
