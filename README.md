@@ -28,6 +28,11 @@ Fitur History memungkinkan User (tim produksi) untuk melihat riwayat pesanan bar
 -   Melihat Riwayat Pesanan: User dapat melihat daftar barang yang pernah dipesan bersama dengan tanggal dan status pesanan. 
 -   Automatic Supplier Request (Jika Order Pending): Jika status pesanan berada dalam kondisi pending (karena tidak ada bahan di inventory), sistem akan secara otomatis membuat permintaan ke supplier untuk memenuhi kebutuhan bahan baku yang dibutuhkan. Fungsionalitas ini secara langsung terhubung ke request materials di fungsi History milik Admin.
 
+## Pedoman Penggunaan:
+1. Untuk mengakses perangkat lunak dapat dilakukan dengan download aplikasi di (link) atau masuk lewat website [IMS](https://inventory-management-lay-sti.vercel.app/)
+2. Admin adalah tim inventory yang memiliki akses ke materials yang tersedia, materials yang digunakan untuk produksi, dan materials yang sedang direquest ke supplier. Untuk masuk sebagai admin, login dengan email admin@lasti.com dan password admin123 atau user123.
+3. User adalah tim produksi yang bertugas untuk memesan produk apabila produk tersebut tidak ada di inventory produk. Untuk masuk sebagai user, login dengan email user@lasti.com dan password user123.
+
 ## Anggota Kelompok
 - Adrian Fahri Affandi - 18221002
 - Farchan Martha Adji Chandra - 18221011
