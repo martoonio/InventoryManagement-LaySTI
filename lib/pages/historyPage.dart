@@ -73,7 +73,7 @@ class _HistoryPageState extends State<HistoryPage> {
               return Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -105,10 +105,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text('${history[index]["name"]}'),
-                                      Text('${history[index]["quantity"]}'),
+                                      Text('Qty: ${history[index]["quantity"]}'),
                                     ],
                                   ),
-                                  subtitle: Text('${history[index]["date"]}'),
+                                  subtitle: Text('${history[index]["date"]}',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -149,18 +154,25 @@ class _HistoryPageState extends State<HistoryPage> {
                               children: [
                                 ListTile(
                                   title: Column(
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+
                                     children: [
-                                      if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}'),
-                                      if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}'),
-                                      if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}'),
-                                      if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}'),
-                                      if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}'),
-                                      if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
+                                      if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}',),
+                                      if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}',),
+                                      if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}',),
+                                      if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}',),
+                                      if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}',),
+                                      if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}',),
                                     ],
                                   ),
-                                  subtitle: Text('${history[index]["orderDateTime"]}'),
+                                  subtitle: Text('${history[index]["orderDateTime"]}',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -212,7 +224,12 @@ class _HistoryPageState extends State<HistoryPage> {
                                       if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
                                     ],
                                   ),
-                                  subtitle: Text('${history[index]["orderDateTime"]}'),
+                                  subtitle: Text('${history[index]["orderDateTime"]}',
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
