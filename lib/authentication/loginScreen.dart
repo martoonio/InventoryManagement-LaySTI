@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
 
   checkIfNetworkIsAvailable() {
-    cMethods.checkConnectivity(context);
 
     signInFormValidation();
   }
