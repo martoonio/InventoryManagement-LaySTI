@@ -242,7 +242,7 @@ class _ViewItemsState extends State<ViewItems> {
                                                             ElevatedButton(
                                                               style: ElevatedButton
                                                                   .styleFrom(
-                                                                      primary: Colors.red,
+                                                                      backgroundColor: Colors.red,
                                                                       elevation: 2,
                                                                       fixedSize:
                                                                           Size(100, 20)),
@@ -261,8 +261,7 @@ class _ViewItemsState extends State<ViewItems> {
                                                             ElevatedButton(
                                                               style: ElevatedButton
                                                                   .styleFrom(
-                                                                      primary:
-                                                                          kPrimaryColor,
+                                                                      backgroundColor: kPrimaryColor,
                                                                       elevation: 2,
                                                                       fixedSize:
                                                                           Size(100, 20)),
@@ -340,8 +339,7 @@ class _ViewItemsState extends State<ViewItems> {
                                                               ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                        primary:
-                                                                            Colors
+                                                                        backgroundColor: Colors
                                                                                 .red,
                                                                         elevation: 2,
                                                                         fixedSize:
@@ -365,8 +363,7 @@ class _ViewItemsState extends State<ViewItems> {
                                                               ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                        primary:
-                                                                            kPrimaryColor,
+                                                                        backgroundColor: kPrimaryColor,
                                                                         elevation: 2,
                                                                         fixedSize:
                                                                             Size(100,

@@ -78,10 +78,8 @@ class _HomeProductionState extends State<HomeProduction> {
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                    elevation: 10,
+                    foregroundColor: Colors.white, backgroundColor: kSecondaryColor, elevation: 10,
                     fixedSize: Size(400, 110),
-                    primary: kSecondaryColor,
-                    onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                       side: BorderSide(
@@ -120,10 +118,8 @@ class _HomeProductionState extends State<HomeProduction> {
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                    elevation: 10,
+                    foregroundColor: Colors.white, backgroundColor: kSecondaryColor, elevation: 10,
                     fixedSize: Size(400, 110),
-                    primary: kSecondaryColor,
-                    onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                       side: BorderSide(

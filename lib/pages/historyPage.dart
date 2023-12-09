@@ -38,196 +38,198 @@ class _HistoryPageState extends State<HistoryPage> {
                 size: 40,
               ),
             )),
-        body: StreamBuilder(
-            stream: listHistory.onValue,
-            builder: (BuildContext context, snapshotData) {
-              if (snapshotData.hasError) {
-                return Center(
-                  child: Text(
-                    "Error Occurred.",
-                    style: GoogleFonts.poppins(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              }
-
-              if (!(snapshotData.hasData)) {
-                return Center(
-                  child: Text(
-                    "No item found.",
-                    style: GoogleFonts.poppins(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              }
-
-              Map items = snapshotData.data!.snapshot.value as Map;
-              List history = [];
-              items.forEach(
-                  (key, value) => history.add({"key": key, ...value}));
-
-              return Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
+        body: SingleChildScrollView(
+          child: StreamBuilder(
+              stream: listHistory.onValue,
+              builder: (BuildContext context, snapshotData) {
+                if (snapshotData.hasError) {
+                  return Center(
                     child: Text(
-                      "Materials In",
+                      "Error Occurred.",
                       style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
                         color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+
+                if (!(snapshotData.hasData)) {
+                  return Center(
+                    child: Text(
+                      "No item found.",
+                      style: GoogleFonts.poppins(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+
+                Map items = snapshotData.data!.snapshot.value as Map;
+                List history = [];
+                items.forEach(
+                    (key, value) => history.add({"key": key, ...value}));
+
+                return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Materials In",
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      if (history[index]["status"] == "Added") {
-                        return Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20),
-                          child: Card(
-                            color: kSecondaryColor,
-                            elevation: 10,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('${history[index]["name"]}'),
-                                      Text('${history[index]["quantity"]}'),
-                                    ],
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        if (history[index]["status"] == "Added") {
+                          return Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 20),
+                            child: Card(
+                              color: kSecondaryColor,
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('${history[index]["name"]}'),
+                                        Text('${history[index]["quantity"]}'),
+                                      ],
+                                    ),
+                                    subtitle: Text('${history[index]["date"]}'),
                                   ),
-                                  subtitle: Text('${history[index]["date"]}'),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Materials Out",
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Materials Out",
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      if (history[index]["orderStatus"] == "Removed") {
-                        return Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20),
-                          child: Card(
-                            color: kSecondaryColor,
-                            elevation: 10,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Column(
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}'),
-                                      if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}'),
-                                      if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}'),
-                                      if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}'),
-                                      if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}'),
-                                      if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
-                                    ],
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        if (history[index]["orderStatus"] == "Removed") {
+                          return Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 20),
+                            child: Card(
+                              color: kSecondaryColor,
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Column(
+                                      // mainAxisAlignment:
+                                      //     MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}'),
+                                        if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}'),
+                                        if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}'),
+                                        if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}'),
+                                        if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}'),
+                                        if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
+                                      ],
+                                    ),
+                                    subtitle: Text('${history[index]["orderDateTime"]}'),
                                   ),
-                                  subtitle: Text('${history[index]["orderDateTime"]}'),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Request Materials",
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Request Materials",
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      if (history[index]["orderStatus"] == "Pending") {
-                        return Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20),
-                          child: Card(
-                            color: kSecondaryColor,
-                            elevation: 10,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Column(
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.start,
-                                    children: [
-                                      if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}'),
-                                      if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}'),
-                                      if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}'),
-                                      if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}'),
-                                      if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}'),
-                                      if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
-                                    ],
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        if (history[index]["orderStatus"] == "Pending") {
+                          return Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 20),
+                            child: Card(
+                              color: kSecondaryColor,
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Column(
+                                      // mainAxisAlignment:
+                                      //     MainAxisAlignment.start,
+                                      children: [
+                                        if(history[index]["kayu"] != null) Text('Kayu : ${history[index]["kayu"]}'),
+                                        if(history[index]["paku"] != null) Text('Paku : ${history[index]["paku"]}'),
+                                        if(history[index]["cat"] != null) Text('Cat : ${history[index]["cat"]}'),
+                                        if(history[index]["sekrup"] != null) Text('Sekrup : ${history[index]["sekrup"]}'),
+                                        if(history[index]["besi"] != null) Text('Besi : ${history[index]["besi"]}'),
+                                        if(history[index]["kaca"] != null) Text('Kaca : ${history[index]["kaca"]}'),
+                                      ],
+                                    ),
+                                    subtitle: Text('${history[index]["orderDateTime"]}'),
                                   ),
-                                  subtitle: Text('${history[index]["orderDateTime"]}'),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
-                            );
-        }
-      )
+                ],
+                              );
+          }
+        )
+      ),
     );
   }
 }
