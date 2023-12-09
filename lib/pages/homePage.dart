@@ -52,11 +52,8 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
           Image.asset(
-            "images/inventory.png",
+            "images/logolasti.png",
             width: 220,
-          ),
-          SizedBox(
-            height: 20,
           ),
           Expanded(
             child: ListView(
