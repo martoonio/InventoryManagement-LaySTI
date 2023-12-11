@@ -70,7 +70,7 @@ class _HomeProductionState extends State<HomeProduction> {
                       Text(
                         "Make Order",
                         style: GoogleFonts.poppins(
-                          fontSize: 40,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -110,7 +110,7 @@ class _HomeProductionState extends State<HomeProduction> {
                       Text(
                         "History",
                         style: GoogleFonts.poppins(
-                          fontSize: 40,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

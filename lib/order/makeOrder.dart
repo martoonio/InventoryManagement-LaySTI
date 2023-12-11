@@ -396,7 +396,7 @@ class _MakeOrderState extends State<MakeOrder> {
                     Container(
                       width: 130,
                       height: 50,
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         color: kSecondaryColor,
                         borderRadius: BorderRadius.circular(10),
@@ -481,7 +481,7 @@ class _MakeOrderState extends State<MakeOrder> {
                     Container(
                       width: 130,
                       height: 50,
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         color: kSecondaryColor,
                         borderRadius: BorderRadius.circular(10),
@@ -566,7 +566,7 @@ class _MakeOrderState extends State<MakeOrder> {
                     Container(
                       width: 130,
                       height: 50,
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         color: kSecondaryColor,
                         borderRadius: BorderRadius.circular(10),
@@ -651,7 +651,7 @@ class _MakeOrderState extends State<MakeOrder> {
                     Container(
                       width: 130,
                       height: 50,
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         color: kSecondaryColor,
                         borderRadius: BorderRadius.circular(10),
@@ -736,7 +736,7 @@ class _MakeOrderState extends State<MakeOrder> {
                     Container(
                       width: 130,
                       height: 50,
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         color: kSecondaryColor,
                         borderRadius: BorderRadius.circular(10),
